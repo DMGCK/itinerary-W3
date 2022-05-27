@@ -1,1 +1,18 @@
 /* BASIC STYLES HERE */
+
+
+.bg-expedia {
+  background-color: rgb(252,194,2);
+}
+
+.table-header {
+  width: 16%;
+}
+
+.table-text-center {
+  text-align: center;
+}
+
+.end {
+  text-align:  end;
+}

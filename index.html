@@ -8,27 +8,197 @@
   <link rel="icon" href="https://bcw.blob.core.windows.net/public/img/9977764104160066">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+      <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/style/main.css">
   <link rel="stylesheet" href="assets/style/style.css">
   <title>itinerary-W3</title>
 </head>
 
+
+
 <body>
   <header>
-    <nav class="navbar navbar-dark navbar-expand bg-dark text-light no-select">
+    <nav class="navbar navbar-dark navbar-expand bg-expedia text-dark no-select">
       <a class="navbar-brand ms-3" href="#">
-        <img src="https://codeworks.blob.core.windows.net/public/assets/img/cw-mark.png" height="45" alt=""
+        <img src="https://static-prod.adweek.com/wp-content/uploads/2019/12/expedia-logo-breaking-CONTENT-2019.jpg.webp" height="45" alt=""
           loading="lazy">
-        <span class="ms-2">itinerary-W3</span>
+        <span class="ms-2 text-dark fs-3">Expedia Itinerary Manager</span>
       </a>
+      <!-- Button trigger modal -->
+<button type="button" class="btn btn-light btn-outline-success text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  New Itinerary
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-expedia">
+        <h5 class="modal-title" id="exampleModalLabel">New Itinerary</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        
+        <form onsubmit="app.itinerariesController.newItin()">
+
+          <div class="mb-1">
+            <label for="Name" class="form-label"></label>
+            <input type="text" class="form-control" required name="name" minlength="3" maxlength="15" id="name" aria-describedby="helpId" placeholder="Name of Itinerary">
+          </div>
+
+          <div class="my-1 mb-4">
+            <label for="Name" class="form-label"></label>
+            <input type="text" class="form-control" required name="tag" id="tag" aria-describedby="helpId" placeholder="Tag Itinerary">
+          </div>
+        
+          <button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Save Itinerary</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </form>
+
+      </div>
+      <div class="modal-footer bg-expedia">
+      </div>
+    </div>
+  </div>
+</div>
     </nav>
   </header>
-  <main>
+  <main class="bg-dark">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div id="app"></div>
-        </div>
+      <div id="itinerary" class="row">
+        <!-- <div class="col-12"> -->
+          
+          <div  class="col-12">
+            
+            
+            <!-- template -->
+            <div class="m-2 p-3 bg-light rounded">
+              <div class="row">
+                <div class="col-12 ">
+                  <h3 class="p-2 pb-4 m-0 d-flex justify-content-between" >
+                    <span>
+                      ${this.name}  -  <span class="text-muted fs-4"> ${this.tag}</span>
+
+                      <div onclick="app.itinerariesController.removeItin('${this.id}'')" class="btn btn-danger mdi mdi-delete"></div>
+                    </span>
+                  </h3>
+                  <div class="bg-expedia p-2 rounded d-flex fw-bold shadow-sm">
+
+                    <div class="table-header">Type</div>
+                    <div class="table-header">Name</div>
+                    <div class="table-header table-text-center">confirmation</div>
+                    <div class="table-header">address</div>
+                    <div class="table-header end">date</div>
+                    <div class="table-header end">cost</div>
+                  </div>
+                </div>
+              </div>
+              <div id="itineraries" class="row">
+                <div class="col-12 ">
+                  <div class="bg-primary p-2 py-3 border border-1 border-secondary shadow-sm  mt-4 rounded d-flex">
+
+                    <div class="table-header ">Airline</div>
+                    <div class="table-header ">Delta BOS -> LGA</div>
+                    <div class="table-header  table-text-center">645TR3 </div>
+                    <div class="table-header  text-nowrap">Boston Hobby Airport</div>
+                    <div class="table-header  end">July 4, 2022</div>
+                    <div class="table-header  end">$1700</div>
+                  </div>
+                </div>
+              </div>
+
+
+              <p class="my-4">
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  New Reservation
+                </button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                  Notes
+                </button>
+              </p>
+              
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                 
+                  
+
+                  <div id="reservation-form" class="row">
+                    <div class="col">
+                      <div class="border border-1 border-secondary shadow-sm rounded my-3 p-3">
+                        <h4>New Reservation</h4>
+                        <form onsubmit="app.reservationsController.newRes('${this.id}')">
+    
+                          <div class="row justify-content-center">
+    
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                                <label for="" class="form-label"></label>
+                                <input type="text" class="form-control" required name="name" id="name" aria-describedby="helpId" placeholder="Name of Reservation">
+                              </div>
+                            </div>
+    
+                            <div class="col-md-3 col-6 ">
+                              <div class="mb-3">
+                                <label for="" class="form-label"></label>
+                                <input class="form-control" type="date" name="date" id="date"></div>
+                              </div>
+    
+                              <div class="col-md-3 col-6 ">
+                                <div class="mb-3">
+                                  <label for="" class="form-label"></label>
+                                  <input class="form-control" type="number" placeholder="Price" name="price" id="price"></div>
+                                </div>
+    
+    
+                                <div class="col-md-6">
+                                  <div class="mb-3">
+                                    <label for="" class="form-label"></label>
+                                    <input type="text" class="form-control" required name="address" id="address" aria-describedby="helpId" placeholder="Address">
+                                  </div>
+                                </div>
+        
+                                <div class="col-md-3 col-6 ">
+                                  <div class="mb-3">
+                                    <label for="" class="form-label"></label>
+                                    <input class="form-control" placeholder="Confirmation" type="text" name="confirmation" id="confirmation"></div>
+                                  </div>
+        
+                                  <div class="col-md-3 col-6 ">
+                                    <div class="mb-3">
+                                      <label for="" class="form-label"></label>
+                                      <input class="form-control" type="text" placeholder="Type" name="type" id="type"></div>
+                                    </div>
+    
+                                    <button class="btn btn-warning btn-outline-success text-dark w-25">Add Reservation</button>
+                          </div>
+    
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="collapse" id="collapseExample2">
+                <div class="card card-body">
+                  
+                  <textarea name="${this.id}textarea" id="${this.id}textarea" onblur="app.itinerariesController.textArea('jimmy')" cols="30" rows="10"></textarea>
+                </div>
+              </div>
+              <!-- end template -->
+              </div>
+            </div>
+
+
+<span></span>
+
+
+
+          </div>
+
+        <!-- </div> -->
       </div>
     </div>
   </main>
