@@ -5,6 +5,7 @@ import { Pop } from "../Utils/Pop.js";
 
 function _drawItin() {
   console.log('draw is attempting', ProxyState.itineraries); 
+  
   let template = ''
   ProxyState.itineraries.forEach(i => template += i.Template)
   document.getElementById('itinerary').innerHTML = template
