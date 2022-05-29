@@ -5,7 +5,7 @@ export class Reservation {
     this.id = dataObj.id || generateId()
     this.parentId = dataObj.parentId
     this.name = dataObj.name
-    this.date = dataObj.date
+    this.date = new Date(dataObj.date)
     this.price = dataObj.price
     this.address = dataObj.address
     this.confirmation = dataObj.confirmation

@@ -10,19 +10,35 @@ export class Itinerary {
     this.notes = dataObj.notes || ''
   }
 
+  get tabTemplate() {
+    let template = ''
+    ProxyState.itineraries.forEach(i => {
+      template += `
+      `
+    })
+  }
+ 
+
+  // TODO collapse whole thing
   get Template() {
     return /*html */ `
     <div class="m-2 p-3 bg-light rounded">
+    <h3 class="p-2 pb-4 m-0 d-flex justify-content-between">
+      <span class=" rounded p-1 border border-0">${this.name} - <span class="text-muted fs-4"> ${this.tag}</span>
+    </span>
+    
+    
+    <div class="text-end">${this.Total ? "$" : ''}${this.Total ? this.Total : ''}</div>
+    <div onclick="app.itinerariesController.removeItin('${this.id}')" class="btn btn-danger mdi mdi-delete"></div>
+  </h3>
+
     <div class="row">
       <div class="col-12 ">
-      <h3 class="p-2 pb-4 m-0 d-flex justify-content-between" >
-      <span>${this.name}  -  <span class="text-muted fs-4"> ${this.tag}</span>
 
-       </span>
-      <div class="text-end">${this.Total ? "$" : ''}${this.Total ? this.Total : ''}</div>
-        <div onclick="app.itinerariesController.removeItin('${this.id}')" class="btn btn-danger mdi mdi-delete"></div>
-    </h3>
-        <div class="bg-expedia p-2 rounded d-flex fw-bold shadow-sm">
+    
+    
+    <div class="bg-expedia p-2 rounded d-flex fw-bold shadow-sm">
+
 
           <div class="table-header">Type</div>
           <div class="table-header">Name</div>
@@ -41,15 +57,15 @@ export class Itinerary {
       </div>
     </div>
     <p class="my-4">
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${this.id}-form" aria-expanded="false" aria-controls="collapse${this.id}-form">
                   New Reservation
                 </button>
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${this.id}-notes" aria-expanded="false" aria-controls="collapse${this.id}-notes">
                   Notes
                 </button>
               </p>
               
-              <div class="collapse" id="collapseExample">
+              <div class="collapse" id="collapse${this.id}-form">
                 <div class="card card-body">
                  
                   
@@ -112,19 +128,20 @@ export class Itinerary {
                 </div>
               </div>
 
-              <div class="collapse" id="collapseExample2">
+              <div class="collapse" id="collapse${this.id}-notes">
                 <div class="card card-body">
                   
                   <textarea name="${this.id}textarea" id="${this.id}textarea" onblur="app.itinerariesController.textArea('${this.id}')" cols="30" rows="10">${this.notes}</textarea>
                 </div>
               </div>
+            </div>
     `
   }
 
   get getReservations() {
     let res = ProxyState.reservations.filter(r => r.parentId == this.id)
     const sortedRes = res.sort((a, b) => a.date - b.date)
-    // console.log(sortedRes); 
+    console.log(sortedRes); 
     
     let template = ''
 
